@@ -7,7 +7,7 @@ import '@wordpress/components/build-style/style.css';
 import '@wordpress/dataviews/build-style/style.css';
 
 import './styles/page.css';
-import './styles/field-order.css';
+import './styles/properties.css';
 
 import App from './App.jsx';
 

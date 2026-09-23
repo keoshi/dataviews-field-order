@@ -85,59 +85,12 @@ body {
   font-weight: var(--wpds-typography-font-weight-emphasis);
 }
 
-/* --- This demo's own chrome ---------------------------------------------- */
+.posts-title { font-weight: var(--wpds-typography-font-weight-emphasis); }
 
-.page__head h1 {
-  font-family: var(--wpds-typography-font-family-heading);
-  font-size: var(--wpds-typography-font-size-2xl);
-  margin: 0 0 var(--wpds-dimension-margin-sm);
-}
-
-.page__lede { margin: 0; max-inline-size: 68ch; }
-
-.page__section { display: flex; flex-direction: column; gap: var(--wpds-dimension-gap-md); }
-
-.page__section h2 {
-  font-family: var(--wpds-typography-font-family-heading);
-  font-size: var(--wpds-typography-font-size-lg);
-  margin: 0;
-}
-
-.page__section p { margin: 0; max-inline-size: 68ch; }
-
-/* The table and the proposed control, in one card. The control sits above the
-   table on the same edge DataViews puts its own cog on, because the argument is
-   that the two belong in the same place. */
-.page__demo {
+/* The table, in the same panel the controls sit in. */
+.table {
   border: 1px solid var(--wpds-color-stroke-surface-neutral-weak);
   border-radius: var(--wpds-dimension-radius-lg);
   background: var(--wpds-color-background-surface-neutral);
   overflow: hidden;
-}
-
-.page__demo-actions {
-  display: flex;
-  justify-content: flex-end;
-  padding: var(--wpds-dimension-padding-md) var(--wpds-dimension-padding-lg) 0;
-}
-
-.page__list { margin: 0; padding-inline-start: 1.2em; display: grid; gap: var(--wpds-dimension-gap-sm); max-inline-size: 68ch; }
-
-.page__foot {
-  border-block-start: 1px solid var(--wpds-color-stroke-surface-neutral-weak);
-  padding-block-start: var(--wpds-dimension-padding-lg);
-  color: var(--wpds-color-foreground-content-neutral-weak);
-}
-
-.page__foot p { margin: 0; max-inline-size: 68ch; }
-
-.posts-title { font-weight: var(--wpds-typography-font-weight-emphasis); }
-
-/* Says which of the two controls on this card is the one being proposed. The
-   cog beside it is DataViews' own and needs no label. */
-.page__demo-label {
-  align-self: center;
-  margin-inline-end: var(--wpds-dimension-margin-sm);
-  color: var(--wpds-color-foreground-content-neutral-weak);
-  font-size: var(--wpds-typography-font-size-sm);
 }
