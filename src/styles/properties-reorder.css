@@ -14,6 +14,12 @@
   padding-inline-end: 36px;
 }
 
+/* The separator between rows is drawn on each of the wrapper's children, so
+   the handle draws one too and the hairline goes double-dark under it. */
+.dataviews-view-config__properties [role='listitem'] > .properties-reorder__handle {
+  border: 0;
+}
+
 .properties-reorder__handle {
   position: absolute;
   inset-block: 0;
