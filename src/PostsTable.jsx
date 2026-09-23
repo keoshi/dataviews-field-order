@@ -1,34 +1,35 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { useMemo } from 'react';
 import { DataViews, filterSortAndPaginate } from '@wordpress/dataviews';
-import PropertiesPanel from './PropertiesPanel.jsx';
+import PropertiesReorder from './PropertiesReorder.jsx';
 
 /**
- * Stock DataViews, with one button swapped.
+ * Stock DataViews.
  *
- * Nothing here patches the table. The header menus still move columns, sorting
- * and filtering are untouched, and the order still lives in `view.fields`. The
- * only change is the cog: DataViews' own is hidden and ours is portalled into
- * the same slot, so the panel a reader opens is the one being proposed rather
- * than a second control sitting beside it.
+ * Nothing here is patched or replaced: the cog is DataViews' own, so is the
+ * Appearance panel behind it, and so are the column header menus. The order
+ * still lives in `view.fields` and the table still renders it.
  *
- * A portal rather than a prop because DataViews has no slot for this. That is
- * itself part of the argument — a consumer who wants this today cannot add it
- * to the panel, only beside it.
+ * Two things are arranged from outside. The `fields` list is handed over in the
+ * table's order, which is what puts the Properties list in that order too —
+ * the panel lists fields as the consumer declares them. And `PropertiesReorder`
+ * puts a handle on each of its rows.
  */
-export default function PostsTable({ rows, columns, view, onChangeView, arrangement, onChangeArrangement, reorderable }) {
-  const frame = useRef(null);
-  const [slot, setSlot] = useState(null);
+export default function PostsTable({ rows, columns, view, onChangeView, order, reorderable, onReorder }) {
+  const fields = useMemo(() => {
+    const byId = Object.fromEntries(columns.map((column) => [column.id, column]));
 
-  // DataViews renders its toolbar after mount, so the slot is found rather than
-  // rendered into directly.
-  useEffect(() => {
-    const actions = frame.current?.querySelector('.dataviews__view-actions');
-    setSlot(actions ?? null);
-  }, []);
+    /*
+     * With the change on, the panel is in the table's order — including the
+     * hidden columns, each sitting where it will come back to. With it off,
+     * the fields are declared in the order the consumer wrote them, which is
+     * DataViews today: the list stops describing the table as soon as anybody
+     * moves a column.
+     */
+    const ordered = reorderable
+      ? order.filter((id) => id !== 'title').map((id) => byId[id]).filter(Boolean)
+      : columns;
 
-  const fields = useMemo(
-    () => [
+    return [
       {
         id: 'title',
         label: 'Title',
@@ -37,7 +38,7 @@ export default function PostsTable({ rows, columns, view, onChangeView, arrangem
         getValue: ({ item }) => item.title,
         render: ({ item }) => <span className="posts-title">{item.title}</span>,
       },
-      ...columns.map((column) => ({
+      ...ordered.map((column) => ({
         id: column.id,
         label: column.label,
         enableSorting: true,
@@ -51,22 +52,16 @@ export default function PostsTable({ rows, columns, view, onChangeView, arrangem
           <span className="posts-cell">{item[column.id]?.value ?? item[column.id]}</span>
         ),
       })),
-    ],
-    [columns]
-  );
+    ];
+  }, [columns, order, reorderable]);
 
   const { data, paginationInfo } = useMemo(
     () => filterSortAndPaginate(rows, view, fields),
     [rows, view, fields]
   );
 
-  const panelFields = useMemo(
-    () => [{ id: 'title', label: 'Title', locked: true }, ...columns.map(({ id, label }) => ({ id, label }))],
-    [columns]
-  );
-
   return (
-    <div className="table" ref={frame}>
+    <div className="table">
       <DataViews
         data={data}
         fields={fields}
@@ -78,17 +73,12 @@ export default function PostsTable({ rows, columns, view, onChangeView, arrangem
         isItemClickable={() => false}
       />
 
-      {slot &&
-        createPortal(
-          <PropertiesPanel
-            fields={panelFields}
-            order={arrangement.order}
-            hidden={arrangement.hidden}
-            reorderable={reorderable}
-            onChange={onChangeArrangement}
-          />,
-          slot
-        )}
+      <PropertiesReorder
+        enabled={reorderable}
+        fields={fields}
+        lockedId="title"
+        onReorder={onReorder}
+      />
     </div>
   );
 }

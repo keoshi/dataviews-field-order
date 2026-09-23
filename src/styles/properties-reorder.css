@@ -1,0 +1,41 @@
+/*
+ * The handles, and only the handles.
+ *
+ * Everything else in the Appearance panel is DataViews' — its frame, its rows,
+ * its padding, its hover. What is added is a grip at the end of each row and
+ * the lift that goes with holding one, so that the two modes differ by exactly
+ * the thing being proposed.
+ */
+
+/* The row's wrapper, which is a plain div around the button that toggles the
+   column. The handle sits in it rather than inside the button, because a
+   button cannot hold another one. */
+.dataviews-view-config__properties [role='listitem']:has(> .properties-reorder__handle) > .components-item {
+  padding-inline-end: 36px;
+}
+
+.properties-reorder__handle {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 36px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--wpds-color-foreground-content-neutral-weak);
+  cursor: grab;
+}
+
+.properties-reorder__handle:active {
+  cursor: grabbing;
+}
+
+/* Held, rather than a gap that moved. Opaque only while it is off the stack,
+   so the rest of the time the row is the panel's own surface. */
+.dataviews-view-config__properties [role='listitem'].is-dragging {
+  background: var(--wpds-color-background-surface-neutral-strong);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}

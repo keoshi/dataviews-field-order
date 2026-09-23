@@ -17,7 +17,8 @@ import { AUTHORS, CATEGORIES, STATUSES, rows } from './data/posts.js';
  * one, and ticking a hidden column back on appends it to the end.
  *
  * So the switch puts a handle on each row of that panel and keeps a hidden
- * column's place. Everything else is DataViews as it ships.
+ * column's place. Everything else is DataViews as it ships, including the panel
+ * itself.
  */
 
 const asElements = (values) => values.map((value) => ({ value, label: value }));
@@ -69,26 +70,48 @@ export default function App() {
   });
 
   /*
-   * Either control can change the order, and both write to the same place. Move
-   * left in a header menu writes `view.fields`; the panel writes the
-   * arrangement and derives `view.fields` from it. Keeping the two in step is
-   * what lets a reader move a column from the header and find the panel
-   * agreeing with them.
+   * Everything DataViews does to the view comes through here, and a tick in the
+   * Properties panel is one of those things — which is where the change is.
+   *
+   * With it on, hiding a column takes it off the table and leaves its place
+   * alone, so ticking it back on returns it. With it off, the order is rebuilt
+   * from the visible list the way DataViews keeps it, and a column that comes
+   * back arrives at the end.
    */
   const onChangeView = (next) => {
-    const moved = next.fields ?? [];
-    setArrangement((current) => ({
-      order: ['title', ...moved, ...current.order.filter((id) => id !== 'title' && !moved.includes(id))],
-      hidden: ALL.filter((id) => id !== 'title' && !moved.includes(id)),
-    }));
-    setView(next);
+    const fields = next.fields ?? [];
+    const hidden = ALL.filter((id) => id !== 'title' && !fields.includes(id));
+
+    if (!reorderable) {
+      setArrangement({ order: ['title', ...fields, ...hidden], hidden });
+      setView(next);
+      return;
+    }
+
+    const visible = arrangement.order.filter((id) => id !== 'title' && !arrangement.hidden.includes(id));
+    let order;
+
+    if (visible.length !== fields.length) {
+      // A tick. The place is left alone, which is the whole of the change: a
+      // column that comes back finds its own slot rather than the end.
+      order = arrangement.order;
+    } else {
+      // A move, from a column header menu: the visible columns take their new
+      // order and the hidden ones keep the slots they are in.
+      const moved = [...fields];
+      order = arrangement.order.map((id) => (id === 'title' || hidden.includes(id) ? id : moved.shift()));
+    }
+
+    setArrangement({ order, hidden });
+    setView({ ...next, fields: order.filter((id) => id !== 'title' && !hidden.includes(id)) });
   };
 
-  const onChangeArrangement = ({ order, hidden }) => {
-    setArrangement({ order, hidden });
+  /** A drag in the Properties panel, which moves shown and hidden alike. */
+  const onReorder = (order) => {
+    setArrangement((current) => ({ order, hidden: current.hidden }));
     setView((current) => ({
       ...current,
-      fields: order.filter((id) => id !== 'title' && !hidden.includes(id)),
+      fields: order.filter((id) => id !== 'title' && !arrangement.hidden.includes(id)),
     }));
   };
 
@@ -112,9 +135,9 @@ export default function App() {
         columns={COLUMNS}
         view={view}
         onChangeView={onChangeView}
-        arrangement={arrangement}
-        onChangeArrangement={onChangeArrangement}
+        order={arrangement.order}
         reorderable={reorderable}
+        onReorder={onReorder}
       />
     </main>
   );

@@ -70,7 +70,9 @@ body {
   transition: inline-size var(--wpds-motion-duration-medium, 160ms) var(--wpds-motion-easing-ease-out, ease-out);
 }
 
-.posts-table {
+/* The table, in a card on the same terms DataViews' own surface uses — and the
+   same one the sticky-column demo puts it in. */
+.table {
   background-color: var(--wpds-color-background-surface-neutral-strong);
   border: 1px solid var(--wpds-color-stroke-surface-neutral-weak);
   border-radius: var(--wpds-border-radius-lg);
@@ -78,19 +80,7 @@ body {
 }
 
 /* A post title is the name of the row, and carries the weight that goes with
-   being the thing every other cell is about. It wraps, the way wp-admin's does:
-   a title held on one line sets the width of the column that is trying to prove
-   it does not need much. */
-.post-title {
+   being the thing every other cell is about. */
+.posts-title {
   font-weight: var(--wpds-typography-font-weight-emphasis);
-}
-
-.posts-title { font-weight: var(--wpds-typography-font-weight-emphasis); }
-
-/* The table, in the same panel the controls sit in. */
-.table {
-  border: 1px solid var(--wpds-color-stroke-surface-neutral-weak);
-  border-radius: var(--wpds-dimension-radius-lg);
-  background: var(--wpds-color-background-surface-neutral);
-  overflow: hidden;
 }

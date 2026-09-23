@@ -26,13 +26,18 @@ like *arrange your columns* — is the one place that cannot:
 
 ## The demo
 
-The panel in the demo *is* the cog — DataViews' own button is hidden and this
-one takes its place, so there is one control rather than two. The rows are
-`Item` from `@wordpress/components`, which is what DataViews builds the list
-from, so the padding, the hover and the tick slot are theirs.
+The panel that opens is DataViews' own — Sort by, Order, Density, Items per
+page, Properties, none of it reproduced. The only thing added to it is a drag
+handle on each row of the Properties list, and a hidden column keeping its
+place.
 
-The switch turns the proposal off: no handles, and a column ticked back on goes
-to the end, which is the panel as it ships today.
+The switch turns that off: no handles, the list back in the order the fields
+were declared, and a column ticked back on going to the end, which is the panel
+as it ships today.
+
+There is no slot in the Properties list for a consumer to put a handle in, so
+the demo hands each of DataViews' own rows to dnd-kit and portals a button into
+it. That it has to be done that way is part of the argument.
 
 ## Run it
 
@@ -45,9 +50,9 @@ npm run dev
 
 | File | What it is |
 |---|---|
-| `src/App.jsx` | The page, the switch, and the view both controls write to |
-| `src/PropertiesPanel.jsx` | The Properties panel, with and without the change |
-| `src/PostsTable.jsx` | Stock DataViews. Nothing patched but the cog |
+| `src/App.jsx` | The page, the switch, and the arrangement the view comes from |
+| `src/PropertiesReorder.jsx` | The handles, added to DataViews' own rows |
+| `src/PostsTable.jsx` | Stock DataViews, with its fields in the table's order |
 | `src/data/posts.js` | A generic posts table, ten columns after the title |
 
 ## What Core would have to hold
