@@ -25,6 +25,8 @@ list of every column with a tick beside it, which is the screen that looks like
 
 ## The demo
 
+**https://dataviews-field-order.view.fast/**
+
 One table, two controls, both driving the same `view.fields`: the stock cog,
 and a **Columns** panel that lists the columns in the table's order, reorders by
 dragging, and keeps a hidden column's place.
