@@ -16,23 +16,26 @@
   gap: var(--wpds-dimension-gap-sm);
 }
 
+/* `rgba(0, 0, 0, 0.1)` and 2px are `ItemGroup`'s own, not a token: this frame
+   exists to be indistinguishable from the one it replaces. */
 .properties__list {
-  border: 1px solid var(--wpds-color-stroke-surface-neutral-weak);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 2px;
   overflow: hidden;
 }
 
 .properties__row + .properties__row {
-  border-block-start: 1px solid var(--wpds-color-stroke-surface-neutral-weak);
+  border-block-start: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* The row is the `Item` and the handle side by side. `Item` takes the width it
    is given, so the handle sits in the space it leaves rather than on top of
-   its click target. */
+   its click target.
+
+   No background: `Item` draws none, and the popover behind it is white. */
 .properties__row {
   display: flex;
   align-items: center;
-  background: var(--wpds-color-background-surface-neutral);
 }
 
 .properties__row > .components-item { flex: 1 1 auto; min-inline-size: 0; }
@@ -42,6 +45,9 @@
 .properties__row.is-dragging {
   position: relative;
   z-index: 1;
+  /* Opaque only while held, so a lifted row does not show the rows it passes
+     over. The rest of the time it is the popover's own surface. */
+  background: var(--wpds-color-background-surface-neutral-strong);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 

@@ -101,8 +101,7 @@ export default function App() {
       <div className="panel controls">
         <ToggleControl
           __nextHasNoMarginBottom
-          label="Drag to reorder, and keep a hidden column's place"
-          help="Off is the Properties panel as it ships: no handles, and a column ticked back on goes to the end."
+          label="Drag to reorder"
           checked={reorderable}
           onChange={setReorderable}
         />
