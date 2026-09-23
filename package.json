@@ -1,0 +1,30 @@
+{
+  "name": "dataviews-field-order",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A demo for a DataViews proposal: let the Properties panel set column order, and let a hidden column come back where it was.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4321"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@wordpress/components": "^40.1.0",
+    "@wordpress/dataviews": "^19.1.0",
+    "@wordpress/icons": "^16.0.0",
+    "@wordpress/theme": "^2.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.1",
+    "vite": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,13 @@
+node_modules/
+dist/
+
+# Spacefast CLI state and the ignore file it writes beside the published build.
+.spacefast/
+.spacefast/state.json
+/.spacefast-*
+.spacefast/.spacefast-*
+.spacefast/.space-link-*.tmp
+
+# The P2 draft and the Gutenberg issue draft. Not published with the demo.
+post-draft.md
+issue-draft.md

@@ -1,0 +1,143 @@
+/*
+ * The page around the demo.
+ *
+ * Deliberately plain. Everything here is chrome for one table, and a page that
+ * competes with the thing it is showing makes the reviewer's job harder. Colour,
+ * spacing and type come from `@wordpress/theme` so the surroundings agree with
+ * the component under discussion rather than approximating it.
+ */
+
+body {
+  margin: 0;
+  background-color: var(--wpds-color-background-surface-neutral);
+  color: var(--wpds-color-foreground-content-neutral);
+  font-family: var(--wpds-typography-font-family-body);
+  font-size: var(--wpds-typography-font-size-md);
+  line-height: var(--wpds-typography-line-height-md);
+}
+
+.page {
+  max-inline-size: 1232px;
+  margin: 0 auto;
+  padding: var(--wpds-dimension-padding-3xl) var(--wpds-dimension-padding-2xl) 96px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--wpds-dimension-gap-2xl);
+}
+
+.page-header h1 {
+  font-family: var(--wpds-typography-font-family-heading);
+  font-size: var(--wpds-typography-font-size-2xl);
+  line-height: var(--wpds-typography-line-height-2xl);
+  font-weight: var(--wpds-typography-font-weight-emphasis);
+  margin: 0;
+}
+
+/* A card, on the same terms DataViews' own surface uses. */
+.panel {
+  background-color: var(--wpds-color-background-surface-neutral-strong);
+  border: 1px solid var(--wpds-color-stroke-surface-neutral-weak);
+  border-radius: var(--wpds-border-radius-lg);
+  padding: var(--wpds-dimension-padding-xl);
+}
+
+/*
+ * The switches, side by side and in view.
+ *
+ * This prototype is evidence attached to an issue, read by people who have
+ * never opened one of ours. A control they have to go looking for is a control
+ * they do not touch, so nothing here hides in a corner.
+ */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--wpds-dimension-gap-2xl);
+}
+
+.controls > * {
+  flex: 1 1 220px;
+  min-inline-size: 0;
+}
+
+/*
+ * The frame is an iframe, so a stated width is a real viewport rather than a
+ * box — see `Frame.jsx`. Borderless, because the card inside brings its own.
+ */
+.frame {
+  display: block;
+  max-inline-size: 100%;
+  border: 0;
+  transition: inline-size var(--wpds-motion-duration-medium, 160ms) var(--wpds-motion-easing-ease-out, ease-out);
+}
+
+.posts-table {
+  background-color: var(--wpds-color-background-surface-neutral-strong);
+  border: 1px solid var(--wpds-color-stroke-surface-neutral-weak);
+  border-radius: var(--wpds-border-radius-lg);
+  overflow: hidden;
+}
+
+/* A post title is the name of the row, and carries the weight that goes with
+   being the thing every other cell is about. It wraps, the way wp-admin's does:
+   a title held on one line sets the width of the column that is trying to prove
+   it does not need much. */
+.post-title {
+  font-weight: var(--wpds-typography-font-weight-emphasis);
+}
+
+/* --- This demo's own chrome ---------------------------------------------- */
+
+.page__head h1 {
+  font-family: var(--wpds-typography-font-family-heading);
+  font-size: var(--wpds-typography-font-size-2xl);
+  margin: 0 0 var(--wpds-dimension-margin-sm);
+}
+
+.page__lede { margin: 0; max-inline-size: 68ch; }
+
+.page__section { display: flex; flex-direction: column; gap: var(--wpds-dimension-gap-md); }
+
+.page__section h2 {
+  font-family: var(--wpds-typography-font-family-heading);
+  font-size: var(--wpds-typography-font-size-lg);
+  margin: 0;
+}
+
+.page__section p { margin: 0; max-inline-size: 68ch; }
+
+/* The table and the proposed control, in one card. The control sits above the
+   table on the same edge DataViews puts its own cog on, because the argument is
+   that the two belong in the same place. */
+.page__demo {
+  border: 1px solid var(--wpds-color-stroke-surface-neutral-weak);
+  border-radius: var(--wpds-dimension-radius-lg);
+  background: var(--wpds-color-background-surface-neutral);
+  overflow: hidden;
+}
+
+.page__demo-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--wpds-dimension-padding-md) var(--wpds-dimension-padding-lg) 0;
+}
+
+.page__list { margin: 0; padding-inline-start: 1.2em; display: grid; gap: var(--wpds-dimension-gap-sm); max-inline-size: 68ch; }
+
+.page__foot {
+  border-block-start: 1px solid var(--wpds-color-stroke-surface-neutral-weak);
+  padding-block-start: var(--wpds-dimension-padding-lg);
+  color: var(--wpds-color-foreground-content-neutral-weak);
+}
+
+.page__foot p { margin: 0; max-inline-size: 68ch; }
+
+.posts-title { font-weight: var(--wpds-typography-font-weight-emphasis); }
+
+/* Says which of the two controls on this card is the one being proposed. The
+   cog beside it is DataViews' own and needs no label. */
+.page__demo-label {
+  align-self: center;
+  margin-inline-end: var(--wpds-dimension-margin-sm);
+  color: var(--wpds-color-foreground-content-neutral-weak);
+  font-size: var(--wpds-typography-font-size-sm);
+}
